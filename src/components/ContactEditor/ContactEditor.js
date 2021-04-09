@@ -1,53 +1,66 @@
-import { Component } from 'react';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import * as yup from 'yup';
 import s from './ContactEditor.module.css';
 
-class ContactEditor extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+const nameRegExp = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+const phoneRegExp = /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/;
 
-  changeInputValue = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+const validationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .matches(nameRegExp, "Не вірно вказано ім'я")
+    .required('Required'),
+  number: yup
+    .string()
+    .matches(phoneRegExp, 'Телефонний номер не валідний')
+    .required('Required'),
+});
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.onAddContact(this.state);
-    this.setState({ name: '', number: '' });
-  };
+function CustomInput({ field, placeholder, type }) {
+  return (
+    <>
+      <input
+        {...field}
+        type={type}
+        placeholder={placeholder}
+        className={s.input}
+      />
+      <ErrorMessage name={field.name} component="span" />
+    </>
+  );
+}
 
-  render() {
-    const { name, number } = this.state;
-    return (
-      <form>
-        <input
-          type="text"
+const ContactEditor = ({ onAddContact }) => {
+  return (
+    <Formik
+      initialValues={{ name: '', number: '' }}
+      validationSchema={validationSchema}
+      onSubmit={(values, actions) => {
+        onAddContact(values);
+        actions.setSubmitting(false);
+        actions.resetForm({});
+      }}
+    >
+      <Form className={s.wrap}>
+        <Field
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-          required
-          className={s.input}
-          value={name}
-          onChange={this.changeInputValue}
+          type="text"
+          placeholder="Ім'я"
+          component={CustomInput}
         />
-        <input
-          type="tel"
+        <Field
           name="number"
-          pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
-          title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
-          required
-          className={s.input}
-          value={number}
-          onChange={this.changeInputValue}
+          type="tel"
+          placeholder="Телефон"
+          component={CustomInput}
         />
-        <button type="submit" onClick={this.handleSubmit} className={s.btn}>
+
+        <button type="submit" className={s.btn}>
           Add Contact
         </button>
-      </form>
-    );
-  }
-}
+      </Form>
+    </Formik>
+  );
+};
 
 export default ContactEditor;

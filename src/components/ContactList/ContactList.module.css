@@ -1,3 +1,47 @@
+.wrap {
+  width: 500px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgb(236, 236, 236);
+  padding: 25px;
+  border-radius: 5px;
+}
+
 .title {
   margin-bottom: 20px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid rgb(185, 185, 185);
+  transition: all 0.2s linear;
+  border-radius: 5px;
+}
+
+.item:hover {
+  background-color: rgb(187, 187, 187);
+  transform: scale(1.02);
+}
+
+.btn {
+  cursor: pointer;
+  outline: none;
+  width: 20px;
+  height: 20px;
+  background-color: rgb(131, 208, 231);
+  border-radius: 3px;
+  transition: all 0.2s linear;
+}
+
+.btn:hover {
+  background-color: rgb(69, 179, 212);
+  transform: scale(1.03);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }

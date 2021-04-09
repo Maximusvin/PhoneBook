@@ -1,0 +1,27 @@
+.wrap {
+  margin-bottom: 20px;
+}
+
+.input {
+  padding: 7px 10px;
+  border: 1px solid rgb(233, 233, 233);
+  margin-right: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 7px 10px;
+  border: 1px solid rgb(233, 233, 233);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: all 0.2s linear;
+}
+
+.btn:hover {
+  background-color: rgb(255, 245, 245);
+}

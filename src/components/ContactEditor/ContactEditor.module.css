@@ -1,11 +1,45 @@
+.wrap {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  border: 1px solid rgb(214, 214, 214);
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  background-color: rgb(240, 240, 240);
+}
+
 .input {
-  padding: 10px 15px;
+  display: block;
+  margin-bottom: 5px;
+  padding: 7px 10px;
   border: 1px solid rgb(233, 233, 233);
-  margin-right: 10px;
+  border-radius: 5px;
 }
 
 .btn {
+  display: block;
+  width: 100px;
   cursor: pointer;
-  padding: 10px 15px;
+  padding: 7px 10px;
   border: 1px solid rgb(233, 233, 233);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: all 0.2s linear;
+}
+
+.btn:hover {
+  background-color: rgb(255, 245, 245);
+}
+
+span {
+  font-size: 10px;
+  color: #ff0000;
+  margin-bottom: 10px;
 }
