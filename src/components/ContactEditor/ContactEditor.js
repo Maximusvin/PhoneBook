@@ -1,5 +1,6 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import s from './ContactEditor.module.css';
 
 const nameRegExp = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
@@ -30,22 +31,39 @@ function CustomInput({ field, placeholder, type }) {
   );
 }
 
-const ContactEditor = ({ onAddContact }) => {
+const ContactEditor = ({
+  onAddContact,
+  contacts,
+  showModal,
+  onToggleContactEditor,
+}) => {
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
       validationSchema={validationSchema}
       onSubmit={(values, actions) => {
+        if (
+          contacts.find(
+            contact =>
+              contact.name === values.name || contact.number === values.number,
+          )
+        ) {
+          toast.error(`Контакт "${values.name}" або номер телефону уже існує`);
+          return;
+        }
+
         onAddContact(values);
         actions.setSubmitting(false);
         actions.resetForm({});
+        onToggleContactEditor();
       }}
     >
-      <Form className={s.wrap}>
+      <Form className={showModal ? s.wrapShow : s.wrapHide}>
+        <h2 className={s.title}>Створіть новий контакт</h2>
         <Field
           name="name"
           type="text"
-          placeholder="Ім'я"
+          placeholder="Прізвище та ім'я"
           component={CustomInput}
         />
         <Field

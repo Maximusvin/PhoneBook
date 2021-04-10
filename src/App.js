@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Layout from './components/Layout/Layout';
-import ContactEditor from './components/ContactEditor';
-import ContactList from './components/ContactList';
-import Filter from './components/Filter';
+import Sidebar from './components/Sidebar';
+import Content from './components/Content';
+import Header from './components/Header';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,20 +20,23 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    if (localStorage.getItem('contacts')) {
+      this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+    }
+  }
+
+  componentDidUpdate(prevState, prevProps) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   resetFilter = () => {
     this.setState({ filter: '' });
   };
 
   addContact = ({ name, number }) => {
-    if (
-      this.state.contacts.find(
-        contact => contact.name === name || contact.number === number,
-      )
-    ) {
-      toast.error(`Такий контакт ${name} або номер телефону уже існує`);
-      return;
-    }
-
     const newContact = {
       id: uuidv4(),
       name,
@@ -43,7 +46,7 @@ class App extends Component {
       contacts: [...contacts, newContact],
     }));
 
-    toast.success(`Контакт ${name} успішно добавлений в вашу книгу`);
+    toast.success(`Контакт "${name}" успішно добавлений в вашу книгу`);
   };
 
   deleteContact = id => {
@@ -66,28 +69,29 @@ class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { contacts, filter } = this.state;
     const visibleContacts = this.visibleContacts();
 
     return (
-      <Layout>
-        <div className="AppWrap">
-          <h1 className="title">Phonebook</h1>
-          <ContactEditor onAddContact={this.addContact} />
+      <>
+        <Header />
+        <Layout>
+          <div className="AppWrap">
+            <Sidebar />
+            <Content
+              visibleContacts={visibleContacts}
+              contacts={contacts}
+              filter={filter}
+              onAddContact={this.addContact}
+              onChange={this.handleChangeFilter}
+              onReset={this.resetFilter}
+              onDeleteContact={this.deleteContact}
+            />
+          </div>
 
-          <Filter
-            onChange={this.handleChangeFilter}
-            value={filter}
-            onReset={this.resetFilter}
-          />
-          <ContactList
-            contacts={visibleContacts}
-            onDeleteContact={this.deleteContact}
-          />
-        </div>
-
-        <ToastContainer position="top-right" autoClose={5000} />
-      </Layout>
+          <ToastContainer position="top-right" autoClose={5000} />
+        </Layout>
+      </>
     );
   }
 }

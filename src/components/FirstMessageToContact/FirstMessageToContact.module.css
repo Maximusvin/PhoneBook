@@ -1,14 +1,19 @@
-.input {
-  padding: 7px 10px;
-  border: 1px solid rgb(233, 233, 233);
-  margin-right: 10px;
-  border-radius: 5px;
+.wrap {
+  text-align: center;
+}
+
+.text {
+  margin-bottom: 10px;
 }
 
 .btn {
+  display: block;
   cursor: pointer;
   padding: 7px 10px;
   border: 1px solid rgb(233, 233, 233);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
   border-radius: 5px;
   background-color: rgb(236, 236, 236);
   transition: all 0.2s linear;

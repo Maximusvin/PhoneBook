@@ -2,13 +2,17 @@
   width: 500px;
   margin-right: auto;
   margin-left: auto;
-  background-color: rgb(236, 236, 236);
-  padding: 25px;
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
 }
 
-.title {
-  margin-bottom: 20px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  padding-bottom: 20px;
 }
 
 .item {
@@ -22,7 +26,7 @@
 }
 
 .item:hover {
-  background-color: rgb(187, 187, 187);
+  background-color: rgb(236, 236, 236);
   transform: scale(1.02);
 }
 
@@ -44,4 +48,24 @@
 .icon {
   width: 20px;
   height: 20px;
+}
+/* 
+.controls {
+  display: flex;
+  align-items: center;
+} */
+
+.controlsBtn {
+  cursor: pointer;
+  outline: none;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  transition: all 0.2s linear;
+  margin-right: 5px;
+}
+
+.iconBtn {
+  width: 15px;
+  height: 15px;
 }

@@ -21,8 +21,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: 50px;
-  padding-bottom: 50px;
   background-image: url('./img/bg.png');
 }
 

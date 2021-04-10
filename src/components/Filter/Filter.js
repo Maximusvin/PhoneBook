@@ -2,11 +2,9 @@ import s from './Filter.module.css';
 
 const Filter = ({ onChange, value, onReset }) => (
   <div className={s.wrap}>
-    <p>Пошук контакту по імені</p>
-
     <input
       type="text"
-      placeholder="Фільтр"
+      placeholder="Фільтр по імені"
       className={s.input}
       onChange={onChange}
       value={value}
